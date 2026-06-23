@@ -1,0 +1,106 @@
+
+##packages used##
+import pandas as pd 
+import seaborn as sns
+import numpy as np
+import matplotlib.pyplot as plt
+from scipy import stats
+
+##seeing the data##
+df=pd.read_csv('all_data.csv')
+print(df.head())
+
+df.describe()
+df['Life expectancy at birth (years)'].groupby(df.Country).describe()
+df['GDP'].groupby(df.Country).describe()
+
+
+##creating histograms of life expectancy 
+# sns.histplot(x='Life expectancy at birth (years)', hue='Country', data=df)
+
+
+plt.subplot(2,3,1)
+chile=df[df.Country=='Chile']
+print(chile.head())
+sns.histplot(x='Life expectancy at birth (years)', data=chile)
+
+plt.subplot(2,3,2)
+china=df[df.Country=='China']
+sns.histplot(x='Life expectancy at birth (years)', data=china)
+
+plt.subplot(2,3,3)
+germany=df[df.Country=='Germany']
+sns.histplot(x='Life expectancy at birth (years)', data=germany)
+
+plt.subplot(2,3,4)
+mexico=df[df.Country=='Mexico']
+sns.histplot(x='Life expectancy at birth (years)', data=mexico)
+
+plt.subplot(2,3,5)
+usa=df[df.Country=='United States of America']
+sns.histplot(x='Life expectancy at birth (years)', data=usa)
+
+plt.subplot(2,3,6)
+zimbabwe=df[df.Country=='Zimbabwe']
+sns.histplot(x='Life expectancy at birth (years)', data=zimbabwe)
+
+##pearsons correlation##
+
+x=df['Life expectancy at birth (years)']
+y=df['GDP']
+corr, p_value=stats.pearsonr(x,y)
+
+print(corr)
+print(p_value)
+
+
+##creating scattoerplots##
+sns.scatterplot(x=x,y=y,hue='Country', data=df)
+
+df['log_gdp']=np.log(df['GDP'])
+print(df.head())
+
+plt.subplot(2,3,1)
+chile=df[df.Country=='Chile']
+sns.scatterplot(x=chile['Life expectancy at birth (years)'],y=chile['log_gdp'],data=chile)
+plt.xlabel("life expectancy (years)")
+plt.ylabel("log GDP")
+plt.title("Chile")
+
+plt.subplot(2,3,2)
+china=df[df.Country=='China']
+sns.scatterplot(x=china['Life expectancy at birth (years)'],y=china['log_gdp'],data=china)
+plt.xlabel("life expectancy (years)")
+plt.ylabel("log GDP")
+plt.title("China")
+
+plt.subplot(2,3,3)
+germany=df[df.Country=='Germany']
+sns.scatterplot(x=germany['Life expectancy at birth (years)'],y=germany['log_gdp'],data=germany)
+plt.xlabel("life expectancy (years)")
+plt.ylabel("log GDP")
+plt.title("Germany")
+
+plt.subplot(2,3,4)
+mexico=df[df.Country=='Mexico']
+sns.scatterplot(x=mexico['Life expectancy at birth (years)'],y=mexico['log_gdp'],data=mexico)
+plt.xlabel("life expectancy (years)")
+plt.ylabel("log GDP")
+plt.title("Mexico")
+
+plt.subplot(2,3,5)
+usa=df[df.Country=='United States of America']
+sns.scatterplot(x=usa['Life expectancy at birth (years)'],y=usa['log_gdp'],data=usa)
+plt.xlabel("life expectancy (years)")
+plt.ylabel("log GDP")
+plt.title("USA")
+
+plt.subplot(2,3,6)
+zimbabwe=df[df.Country=='Zimbabwe']
+sns.scatterplot(x=zimbabwe['Life expectancy at birth (years)'],y=zimbabwe['log_gdp'],data=zimbabwe)
+plt.xlabel("life expectancy (years)")
+plt.ylabel("log GDP")
+plt.title("Zimbabwe")
+
+
+plt.subplots_adjust(wspace=0.5, hspace=0.5)
